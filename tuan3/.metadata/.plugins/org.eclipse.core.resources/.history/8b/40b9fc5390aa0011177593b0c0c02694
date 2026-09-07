@@ -1,0 +1,75 @@
+package tuan3;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public class HangThucPham {
+	private final String maHang;
+	private String tenHang;
+	private double dongia;
+	private LocalDate ngaySX;
+	private LocalDate hanSD;
+	
+	public void setTenHang(String tenHang) {
+		if(tenHang != null && !tenHang.trim().isEmpty()) this.tenHang = tenHang;
+		else this.tenHang = "xxx";
+	}
+	public void setDongia(double dongia) {
+		if(dongia >= 0) this.dongia = dongia;
+		else this.dongia = 0.0;
+	}
+	public void setNgaySX(LocalDate ngaySX) {
+		if(ngaySX.isBefore(LocalDate.now())) this.ngaySX = ngaySX;
+		else this.ngaySX = LocalDate.now();
+	}
+	public void setHanSD(LocalDate hanSD) {
+		if(hanSD.isAfter(this.ngaySX)) this.hanSD = hanSD;
+		else this.hanSD = this.ngaySX;
+	}
+	
+	public String getMaHang() {
+		return maHang;
+	}
+	public String getTenHang() {
+		return tenHang;
+	}
+	public double getDongia() {
+		return dongia;
+	}
+	public LocalDate getNgaySX() {
+		return ngaySX;
+	}
+	public LocalDate getHanSD() {
+		return hanSD;
+	}
+	
+	public HangThucPham(String maHang, String tenHang, double dongia, LocalDate ngaySX, LocalDate hanSD) {
+		if(maHang != null && maHang.trim().isEmpty()) this.maHang = maHang;
+		else throw new IllegalArgumentException("Ma hang khong duoc rong");
+		setTenHang(tenHang);
+		setDongia(dongia);
+		setNgaySX(ngaySX);
+		setHanSD(hanSD);
+	}
+	public HangThucPham(String maHang) {
+		if(maHang != null && maHang.trim().isEmpty()) this.maHang = maHang;
+		else throw new IllegalArgumentException("Ma hang khong duoc rong");
+		this.tenHang = "xxx";
+		this.dongia = 0.0;
+		this.ngaySX = LocalDate.now();
+		this.hanSD = this.ngaySX;
+	}
+	
+	public String checkHan() {
+		return this.hanSD.isBefore(LocalDate.now()) ? "Hang het han" : "Hang con han";
+	}
+	
+	public String toString()
+	{
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		String date_nsx = this.ngaySX.format(dtf);
+		String date_hsd = this.hanSD.format(dtf);
+		String note = checkHan();
+		String res = String.format("%-8s %-12s %,14.2fVND   %-16s %-16s %s", this.maHang, this.tenHang, this.dongia, date_nsx, date_hsd, note);
+		return res;
+	}
+}

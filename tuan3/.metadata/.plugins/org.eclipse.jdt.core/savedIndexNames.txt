@@ -1,0 +1,4 @@
+INDEX VERSION 1.134+E:\HK1 2026 - 2027\OOP\tuan3\.metadata\.plugins\org.eclipse.jdt.core
+2542205350.index
+3998808529.index
+1865797976.index
